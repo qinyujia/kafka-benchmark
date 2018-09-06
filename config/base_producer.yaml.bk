@@ -1,9 +1,11 @@
 ---
 default:
-  threads: 20
+  threads: 6
   producer_type: BaseProducer
   producer_config:
     bootstrap.servers: localhost:9092
+    queue.buffering.max.ms: 100
+    queue.buffering.max.messages: 1000000
 
 scenarios:
   10B_bursts:
@@ -26,10 +28,3 @@ scenarios:
     topic: benchmark_topic_10KB
     message_size: 10240
     message_count: 50000
-
-  qinyujia:
-    repeat_times: 50
-    repeat_pause: 0
-    topic: qinyujia
-    message_size: 500000
-    message_count: 5000
