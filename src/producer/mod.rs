@@ -10,9 +10,6 @@ use std::sync::Arc;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::thread;
 use std::time::{Duration, Instant};
-use rand::Rng;
-
-extern crate rand;
 
 mod content;
 
@@ -44,13 +41,6 @@ impl ProducerContext for BenchmarkProducerContext {
     }
 }
 
-fn random_string() -> String {
-  let mut rng =rand::thread_rng();
-  let random_num:u8 = rng.gen();
-  let stringtest: String = random_num.to_string();  
-  stringtest
-}
-
 fn base_producer_thread(
     thread_id: u64,
     scenario: &ProducerScenario,
@@ -75,16 +65,11 @@ fn base_producer_thread(
     let start = Instant::now();
     for (count, content) in cache.into_iter().take(per_thread_messages as usize).enumerate() {
         loop {
-	   let x = random_string();
-	  // println!("Random x is: {}",x);
-           match producer.send_copy::<[u8], [u8]>(
+            match producer.send_copy::<[u8], [u8]>(
                 &scenario.topic,
-                //Some(count as i32 % 3),
+               Some(count as i32 % 6),
+                Some(content),
                 None,
-		Some(content),
-		Some(x.as_bytes()),
-		//Some(rand::random::<u8>()),
-//                rand::random::<u8>(),
                 (),
                 None,
             ) {

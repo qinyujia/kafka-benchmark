@@ -1,35 +1,14 @@
 ---
 default:
-  threads: 20
+  threads: 40
   producer_type: BaseProducer
   producer_config:
     bootstrap.servers: localhost:9092
 
 scenarios:
-  10B_bursts:
-    repeat_times: 5
-    repeat_pause: 10
-    topic: benchmark_topic_10B
-    message_size: 10
-    message_count: 20000000
-
-  1KB_bursts:
-    repeat_times: 3
-    repeat_pause: 20
-    topic: benchmark_topic_1KB
-    message_size: 1024
-    message_count: 500000
-
-  10KB_bursts:
-    repeat_times: 3
-    repeat_pause: 20
-    topic: benchmark_topic_10KB
-    message_size: 10240
-    message_count: 50000
-
   qinyujia:
     repeat_times: 50
     repeat_pause: 0
-    topic: qinyujia
+    topic: images
     message_size: 500000
     message_count: 5000
